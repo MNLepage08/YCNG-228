@@ -13,7 +13,9 @@ Session 5: Sprint 1: get a baseline, design of experiments, hypothesis testing. 
 
 Session 7: Iteration 1: Improve the solution. Methods to increase accuracy/ precision, or other metrics. How to optimize your time?
 
-Session 8: End of the exploration and long-term considerations. Session 9: What can go wrong? Common pitfall and how to avoid it. Session 10: Manage Bias in models and explainable AI.
+Session 8: End of the exploration and long-term considerations. 
+
+Session 9: What can go wrong? Common pitfall and how to avoid it. Session 10: Manage Bias in models and explainable AI.
 
 Session 11: Final exam.
 
