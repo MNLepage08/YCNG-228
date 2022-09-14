@@ -24,3 +24,6 @@
 11. Final exam.
 
 12. Retrospective.
+
+### Bibliography
+* [Desing Thinking](https://readings.design/PDF/Tim%20Brown,%20Design%20Thinking.pdf)
