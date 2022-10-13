@@ -1,13 +1,13 @@
 from flask import Flask
 
-from src.business_logic.process_query import create_business_logic
+# from src.business_logic.process_query import create_business_logic
 
 app = Flask(__name__)
 
 
 @app.route('/', methods=['GET'])
 def hello():
-    return f'Hi Nathanael, you should use a better route:!'
+    return f'Hi, you should use a better route:!'
 # return f'Hi Nathanael, you should use a better route:!\nEX: get_stock_val/<ticker>\n'
 
 #@app.route('/get_stock_val/<ticker>', methods=['GET'])
