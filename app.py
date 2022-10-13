@@ -7,15 +7,15 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET'])
 def hello():
-    return f'Hi Nathanael, you should use a better route:!\nEX: get_stock_val/<ticker>\n'
+    return f'Hi Nathanael, you should use a better route:!'
+# return f'Hi Nathanael, you should use a better route:!\nEX: get_stock_val/<ticker>\n'
 
+#@app.route('/get_stock_val/<ticker>', methods=['GET'])
+#def get_stock_value(ticker):
+#    bl = create_business_logic()
+#    prediction = bl.do_predictions_for(ticker)
 
-@app.route('/get_stock_val/<ticker>', methods=['GET'])
-def get_stock_value(ticker):
-    bl = create_business_logic()
-    prediction = bl.do_predictions_for(ticker)
-
-    return f'{prediction}\n'
+#    return f'{prediction}\n'
 
 
 if __name__ == '__main__':
