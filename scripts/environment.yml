@@ -1,0 +1,21 @@
+name: stock
+
+dependencies:
+  - pip=22.2.2
+  - python
+
+  - pip:
+      - matplotlib
+      - pandas
+      - requests
+      - scikit-learn
+      - joblib
+      - requests-html
+      - yahoo-fin
+      - google-cloud-storage
+      - google-api-python-client
+      - google-auth
+      - google-auth-httplib2
+      - GitPython #optional but required in my new version of the app
+
+
