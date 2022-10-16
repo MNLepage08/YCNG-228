@@ -23,6 +23,7 @@ def data_train():
 def data_pred(my_ticker):
 
     now = datetime.now()
-    start_date = now - timedelta(days=10)
+    start_date = now - timedelta(days=30)
     pred = si.get_data(my_ticker, start_date)
+    pred = pred[pred['close'].notnull()]
     return pred
