@@ -3,12 +3,12 @@ import logging
 
 import joblib
 
-from src.IO.get_data_from_yahoo import get_last_stock_price, get_stock_price_model
+from src.IO.get_data_from_yahoo import get_last_stock_price, get_train_stock_price
 from src.IO.storage_tools import create_bucket, get_model_from_bucket, upload_file_to_bucket
 from src.algo.dummy_model import Stock_model
 
 def create_business_logic():
-    data_fetcher = get_last_stock_price
+    data_fetcher = get_train_stock_price
     return BusinessLogic(Stock_model(data_fetcher))
 
 class BusinessLogic:
@@ -20,8 +20,8 @@ class BusinessLogic:
         self._model_creator = model_creator
         self._create_bucket()
 
-    #def get_version(self):
-    #    return self._config['DEFAULT']['version']
+    def get_version(self):
+        return self._config['DEFAULT']['version']
 
     def get_bucket_name(self):
         return f'{self._root_bucket}_{self.get_version().replace(".", "")}'
@@ -38,7 +38,13 @@ class BusinessLogic:
             upload_file_to_bucket(model_filename, self.get_bucket_name())
         return model
 
-    def get_model_filename_from_date(self, date):
-        month = date.month
-        year = date.year
-        return f'baseline_{year}_{month}.pkl'
+    def get_model_filename_from_ticker(self, ticker):
+        return f'{ticker}.pkl'
+
+    def _create_bucket(self):
+        create_bucket(self.get_bucket_name())
+
+    def do_predictions_for(self, ticker):
+        model = self._get_or_create_model(ticker)
+        predictions = model.predict(ticker)
+        return predictions

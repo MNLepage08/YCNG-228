@@ -1,0 +1,95 @@
+import pandas as pd
+
+all = pd.DataFrame(columns=['open', 'high', 'low', 'close', 'adjclose', 'volume', 'ticker', 'lag_0', 'lag_1', 'lag_2', 'lag_3', 'lag_4'])
+
+for ticker in sp:
+
+  mask = (combined['ticker'] == ticker)
+  ticker = combined.loc[mask]
+
+  for lag in range(0,5):
+      ticker[f'lag_{lag}'] = ticker['close'].shift(lag)
+
+  all = all.append(ticker)
+
+all['next'] = all['close'].shift(-1)
+
+def tagger(row):
+    if row['next']<row['lag_0']:
+        return 'Sell'
+    else:
+        return 'Buy'
+
+all['out'] = all.apply(tagger ,axis=1)
+all = all[['lag_0', 'lag_1', 'lag_2', 'lag_3', 'lag_4', 'out']]
+all['date'] = all.index
+all=all[all['lag_4'].notnull()]
+
+mask =  (all['date'] <= '2022-09-01')
+all = all.loc[mask]
+
+List_Date = all.loc[(all['date'] <= '2022-09-01')]
+List_Date = List_Date['date']
+List_Date = List_Date.unique()
+List_Date = np.sort(List_Date)
+
+Train_Date = all.loc[(all['date'] < '2022-06-01')]
+Train_Date = Train_Date['date']
+Train_Date = Train_Date.unique()
+Train_Date = np.sort(Train_Date)
+
+a = List_Date[len(Train_Date)]
+
+prediction=[]
+actual=[]
+
+for i in range(len(Train_Date), len(List_Date)):
+
+  a = List_Date[i]
+
+  train = all.loc[all['date'] < a]
+  test = all.loc[all['date'] == a]
+
+  train = train.drop('date', axis=1)
+  test = test.drop('date', axis=1)
+
+  trainX = train[[f'lag_{lag}' for lag in range(0,5)]]
+  trainY = train['out']
+  testX = test[[f'lag_{lag}' for lag in range(0,5)]]
+  testY = test['out']
+
+  model = LogisticRegression()
+  model.fit(trainX,trainY)
+  pred = model.predict(testX)
+
+  prediction.append(pred)
+  actual.append(testY.values)
+
+prediction = pd.Series(prediction)
+actual = pd.Series(actual)
+
+all_actual = np.concatenate([actual[x] for x in range(len(actual))])
+all_prediction = np.concatenate([prediction[x] for x in range(len(prediction))])
+
+balanced_accuracy_score(all_actual,all_prediction)
+
+
+
+
+
+
+# for prediction of one ticker
+
+for lag in range(0,5):
+    test[f'lag_{lag}'] = test['close'].shift(lag)
+
+test = test[['lag_0', 'lag_1', 'lag_2', 'lag_3', 'lag_4']]
+
+mask =  (test.index == '2022-10-13')
+test = test.loc[mask]
+
+pred_test = model.predict(test)
+pred_test.flatten()[-1]
+
+
+
