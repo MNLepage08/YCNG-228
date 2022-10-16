@@ -7,8 +7,8 @@ def ticker_stock():
     sp = si.tickers_sp500()
     return sp
 
-def test_func(ticker,date):
-    return str(ticker)+str(date)
+#def test_func(ticker,date):
+#    return str(ticker)+str(date)
 
 def data_train():
 
