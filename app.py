@@ -10,7 +10,7 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET'])
 def welcome_msg():
-    return f'Hi test, please use the route: get_predict_data/ticker/YYYY-MM-DD \n'
+    return f'Hi, please use the route: get_predict_data/ticker/YYYY-MM-DD \n'
 
 
 @app.route('/get_data_train/<my_date>', methods=['GET'])
