@@ -2,7 +2,8 @@ from flask import Flask, request
 from src.IO.get_data import data_pred, data_train, ticker_stock
 from src.algo.model import train_model
 from src.algo.transfomData import transform_data
-from src.business_logic.process import predict_model
+from src.business_logic.process import predict_model, load_model_in_bucket, predict_model_from_GCP
+
 
 app = Flask(__name__)
 
@@ -27,8 +28,17 @@ def get_predict_value(my_ticker, my_date):
     my_data_predict = data_pred(my_ticker)
     my_date_predict = my_date
     my_test = transform_data(my_data_predict, my_date_predict)
-    my_predict_value=predict_model(my_test)
+    my_predict_value = predict_model(my_test)
     return my_predict_value
+
+@app.route('/test1/<my_ticker>/<my_date>', methods=['GET'])
+def test1(my_ticker, my_date):
+    load_model_in_bucket()
+    my_data_predict = data_pred(my_ticker)
+    my_date_predict = my_date
+    my_test = transform_data(my_data_predict, my_date_predict)
+    my_predict_value2 = predict_model_from_GCP(my_test)
+    return my_predict_value2
 
 
 if __name__ == '__main__':

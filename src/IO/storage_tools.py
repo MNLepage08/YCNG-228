@@ -2,8 +2,8 @@
 # https://googleapis.dev/python/storage/latest/client.html
 
 import logging
-
 import joblib
+
 from google.api_core.exceptions import NotFound
 from google.cloud import storage
 
@@ -30,10 +30,12 @@ def upload_file_to_bucket(model_file_name, bucket_name):
         blob.upload_from_file(model_file)
 
 
-def delete_model(ticker, bucket_name):
+def delete_model(bucket_name):
+
     client = storage.Client()
     b = client.get_bucket(bucket_name)
-    blob = storage.Blob(f'{ticker}.pkl', b)
+    model_filename = 'my_model'
+    blob = storage.Blob(f'{model_filename}.pkl', b)
     blob.delete()
 
 

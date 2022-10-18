@@ -3,7 +3,17 @@ import numpy as np
 from sklearn.linear_model import LogisticRegression
 from datetime import datetime, timedelta
 import pickle
+import configparser
+import logging
+import joblib
 
+from src.IO.storage_tools import upload_file_to_bucket, create_bucket, get_model_from_bucket
+
+
+root_bucket = 'mnl009_model_bucket_ycng_228'
+config = configparser.ConfigParser()
+config.read('application.conf')
+create_bucket(root_bucket)
 
 def tagger(row):
     if row['next'] < row['lag_0']:
@@ -68,6 +78,18 @@ def train_model(my_combined_data, my_sp, my_date):
 
     filename = 'my_model.pkl'
     pickle.dump(model, open(filename, 'wb'))
+
+    # model_filename = 'my_model.pkl'
+    # log = logging.getLogger()
+    # log.warning(f'training model for GCP')
+    # # model = pickled_model.fit(model_filename)
+    # with open(model_filename, 'wb') as f:
+    #     joblib.dump(model, f)
+    # upload_file_to_bucket(model_filename, root_bucket)
+    # model = get_model_from_bucket(model_filename, root_bucket)
+    # return model
+
+
 
 
 #
