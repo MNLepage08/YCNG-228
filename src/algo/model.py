@@ -1,19 +1,13 @@
 import pandas as pd
 import numpy as np
 from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import balanced_accuracy_score
 from datetime import datetime, timedelta
 import pickle
-import configparser
-import logging
-import joblib
-
-from src.IO.storage_tools import upload_file_to_bucket, create_bucket, get_model_from_bucket
 
 
-root_bucket = 'mnl009_model_bucket_ycng_228'
-config = configparser.ConfigParser()
-config.read('application.conf')
-create_bucket(root_bucket)
+from src.business_logic.process import load_model_in_bucket
+
 
 def tagger(row):
     if row['next'] < row['lag_0']:
@@ -21,7 +15,8 @@ def tagger(row):
     else:
         return 'Buy'
 
-def train_model(my_combined_data, my_sp, my_date):
+
+def train_baseline_model(my_combined_data, my_sp, my_date):
     # 2022 - 10 - 01
     date_object = datetime.strptime(my_date, '%Y-%m-%d').date()
     combined = my_combined_data
@@ -48,63 +43,53 @@ def train_model(my_combined_data, my_sp, my_date):
     List_Date = List_Date.unique()
     List_Date = np.sort(List_Date)
 
-    #Train_Date = all_data.loc[(all_data['date'] < '2022-06-01')]
+    # Train_Date = all_data.loc[(all_data['date'] < '2022-06-01')]
     Train_Date = all_data.loc[(all_data['date'] < str(date_object - timedelta(days=90)))]
 
     Train_Date = Train_Date['date']
     Train_Date = Train_Date.unique()
     Train_Date = np.sort(Train_Date)
 
-    a = List_Date[len(Train_Date)]
-
-    # prediction=[]
-    # actual=[]
+    prediction = []
+    actual = []
 
     for i in range(len(Train_Date), len(List_Date)):
         a = List_Date[i]
         train = all_data.loc[all_data['date'] < a]
-        # test = all.loc[all['date'] == a]
+        test = all_data.loc[all_data['date'] == a]
 
         train = train.drop('date', axis=1)
-        # test = test.drop('date', axis=1)
+        test = test.drop('date', axis=1)
 
         trainX = train[[f'lag_{lag}' for lag in range(0, 5)]]
         trainY = train['out']
-        # testX = test[[f'lag_{lag}' for lag in range(0,5)]]
-        # testY = test['out']
+        testX = test[[f'lag_{lag}' for lag in range(0,5)]]
+        testY = test['out']
 
         model = LogisticRegression()
         model.fit(trainX, trainY)
 
-    filename = 'my_model.pkl'
+        pred_b = model.predict(testX)
+        prediction.append(pred_b)
+        actual.append(testY.values)
+
+    prediction = pd.Series(prediction)
+    actual = pd.Series(actual)
+
+    all_actual = np.concatenate([actual[x] for x in range(len(actual))])
+    all_prediction = np.concatenate([prediction[x] for x in range(len(prediction))])
+    score = balanced_accuracy_score(all_actual, all_prediction)
+    score = str(score)
+
+    # Load the file locally
+    filename = 'my_model_v6.pkl'
     pickle.dump(model, open(filename, 'wb'))
 
-    # model_filename = 'my_model.pkl'
-    # log = logging.getLogger()
-    # log.warning(f'training model for GCP')
-    # # model = pickled_model.fit(model_filename)
-    # with open(model_filename, 'wb') as f:
-    #     joblib.dump(model, f)
-    # upload_file_to_bucket(model_filename, root_bucket)
-    # model = get_model_from_bucket(model_filename, root_bucket)
-    # return model
+    # Load the file in GCP
+    load_model_in_bucket()
 
+    return score
 
-
-
-#
-#   pred = model.predict(testX)
-#
-#   prediction.append(pred)
-#   actual.append(testY.values)
-#
-# prediction = pd.Series(prediction)
-# actual = pd.Series(actual)
-#
-# all_actual = np.concatenate([actual[x] for x in range(len(actual))])
-# all_prediction = np.concatenate([prediction[x] for x in range(len(prediction))])
-#
-# balanced_accuracy_score(all_actual,all_prediction)
 
 
 
