@@ -25,15 +25,16 @@ create_bucket(root_bucket)
 
 
 def load_model_in_bucket():
-    model_filename = 'my_model.pkl'
+    model_filename = 'my_model_v2.pkl'
     log = logging.getLogger()
     log.warning(f'training model for GCP')
+    # model = pickle.load(open('my_model.pkl', 'rb'))
     # model = pickled_model.fit(model_filename)
-    with open(model_filename, 'wb') as f:
-        joblib.dump(model_filename, f)
+    # with open(model_filename, 'wb') as f:
+    #    joblib.dump(model_filename, f)
     upload_file_to_bucket(model_filename, root_bucket)
-    model = get_model_from_bucket(model_filename, root_bucket)
-    return model
+    # model = get_model_from_bucket(model_filename, root_bucket)
+    #return model
 
 
 def predict_model(my_data_predict):
@@ -44,7 +45,7 @@ def predict_model(my_data_predict):
 
 def predict_model_from_GCP(my_data_predict):
     #model = load_model_in_bucket()
-    model_filename = 'my_model.pkl'
+    model_filename = 'my_model_v2.pkl'
     model = get_model_from_bucket(model_filename, root_bucket)
-    pred_test = model.predict(my_data_predict)
-    return pred_test.flatten()[-1]
+    pred_test2 = model.predict(my_data_predict)
+    return pred_test2.flatten()[-1]
