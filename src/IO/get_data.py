@@ -8,10 +8,6 @@ def ticker_stock():
     return sp
 
 
-# def test_func(ticker,date):
-#    return str(ticker)+str(date)
-
-
 def data_train():
 
     # get list of S&P 500 tickers

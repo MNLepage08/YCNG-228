@@ -36,16 +36,6 @@ def get_predict_value(my_ticker, my_date):
     return my_predict_value
 
 
-# @app.route('/test1/<my_ticker>/<my_date>', methods=['GET'])
-# def test1(my_ticker, my_date):
-#     # load_model_in_bucket()
-#     my_data_predict = data_pred(my_ticker)
-#     my_date_predict = my_date
-#     my_test = transform_data(my_data_predict, my_date_predict)
-#     my_predict_value2 = predict_model_from_GCP(my_test)
-#     return my_predict_value2
-
-
 if __name__ == '__main__':
     # Used when running locally only. When deploying to Cloud Run,
     # a webserver process such as Gunicorn will serve the app.
