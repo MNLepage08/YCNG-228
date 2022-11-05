@@ -22,18 +22,30 @@ def train_b_model(my_date):
     return score
 
 
-@app.route('/get_predict_data/<my_ticker>/<my_date>', methods=['GET'])
-def get_predict_value(my_ticker, my_date):
+@app.route('/get_predict_stock/<my_ticker>', methods=['GET'])
+def get_predict_value(my_ticker):
     my_data_predict = data_pred(my_ticker)
-    my_date_predict = my_date
-    my_test = transform_data(my_data_predict, my_date_predict)
-    my_predict_value = predict_model_from_GCP(my_test)
+    my_test = transform_data(my_data_predict)
+    # my_predict_value = predict_model_from_GCP(my_test)
 
     # Prediction from the locally model
-    # my_predict_value = predict_model(my_test)
-    # return my_predict_value
+    my_predict_value = predict_model(my_test)
 
     return my_predict_value
+
+
+# @app.route('/get_predict_data/<my_ticker>/<my_date>', methods=['GET'])
+# def get_predict_value(my_ticker, my_date):
+#     my_data_predict = data_pred(my_ticker)
+#     my_date_predict = my_date
+#     my_test = transform_data(my_data_predict, my_date_predict)
+#     my_predict_value = predict_model_from_GCP(my_test)
+#
+#     # Prediction from the locally model
+#     # my_predict_value = predict_model(my_test)
+#     # return my_predict_value
+#
+#     return my_predict_value
 
 
 if __name__ == '__main__':

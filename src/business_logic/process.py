@@ -33,13 +33,13 @@ def load_model_in_bucket(my_date):
 
 
 def predict_model(my_data_predict):
-    pickled_model = pickle.load(open('my_model_v6.pkl', 'rb'))
+    pickled_model = pickle.load(open('model_2022_9.pkl', 'rb'))
     pred_test = pickled_model.predict(my_data_predict)
     return pred_test.flatten()[-1]
 
 
 def predict_model_from_GCP(my_data_predict):
-    model_filename = 'my_model_v6.pkl'
+    model_filename = 'model_2022_9.pkl'
     model = get_model_from_bucket(model_filename, root_bucket)
     pred_test = model.predict(my_data_predict)
     return pred_test.flatten()[-1]
