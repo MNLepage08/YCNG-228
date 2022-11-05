@@ -26,10 +26,10 @@ def train_b_model(my_date):
 def get_predict_value(my_ticker):
     my_data_predict = data_pred(my_ticker)
     my_test = transform_data(my_data_predict)
-    # my_predict_value = predict_model_from_GCP(my_test)
+    my_predict_value = predict_model_from_GCP(my_test)
 
     # Prediction from the locally model
-    my_predict_value = predict_model(my_test)
+    # my_predict_value = predict_model(my_test)
 
     return my_predict_value
 
