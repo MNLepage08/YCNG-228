@@ -14,7 +14,7 @@ def welcome_msg():
 
 
 @app.route('/train_model/<my_date>', methods=['GET'])
-def train_b_model(my_date):
+def train_model(my_date):
     my_sp = ticker_stock()
     my_train_dataframe = data_train()
     score = train_baseline_model(my_train_dataframe, my_sp, my_date)
@@ -47,6 +47,14 @@ def get_predict_value(my_ticker):
 #
 #     return my_predict_value
 
+
+# @app.route('/train_model/<my_date>', methods=['GET'])
+# def train_b_model(my_date):
+#     my_sp = ticker_stock()
+#     my_train_dataframe = data_train()
+#     score = train_baseline_model(my_train_dataframe, my_sp, my_date)
+#     print(score)
+#     return score
 
 if __name__ == '__main__':
     # Used when running locally only. When deploying to Cloud Run,

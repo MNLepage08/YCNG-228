@@ -24,7 +24,7 @@ create_bucket(root_bucket)
 
 def load_model_in_bucket(my_date):
     date_object = datetime.strptime(my_date, '%Y-%m-%d').date()
-    version_model = 'model_' + str(date_object.year) + '_' + str(date_object.month) + '.pkl'
+    version_model = 'model_' + str(date_object.year) + '_' + str(date_object.month) + '_v2.pkl'
     # model_filename = 'my_model_v6.pkl'
     log = logging.getLogger()
     log.warning(f'training model for GCP')
@@ -33,13 +33,13 @@ def load_model_in_bucket(my_date):
 
 
 def predict_model(my_data_predict):
-    pickled_model = pickle.load(open('model_2022_9.pkl', 'rb'))
+    pickled_model = pickle.load(open('model_2022_9_v2.pkl', 'rb'))
     pred_test = pickled_model.predict(my_data_predict)
     return pred_test.flatten()[-1]
 
 
 def predict_model_from_GCP(my_data_predict):
-    model_filename = 'model_2022_9.pkl'
+    model_filename = 'model_2022_9_v2.pkl'
     model = get_model_from_bucket(model_filename, root_bucket)
     pred_test = model.predict(my_data_predict)
     return pred_test.flatten()[-1]
