@@ -25,5 +25,11 @@
 
 12. Retrospective.
 
-### Bibliography
+## GitHub
+  - [Create a repository: ](https://docs.github.com/en/get-started/quickstart/create-a-repo) You can store a variety of projects in GitHub repositories, including open source projects. With open source projects, you can share code to make better, more reliable software. You can use repositories to collaborate with others and track your work.
+  
+## Google Cloud Platform:
+  - [Set up CI/CD: ](https://cloud.google.com/build/docs/automating-builds/github/build-repos-from-github) GitHub triggers enable you to automatically build on Git pushes and pull requests and view your build results on GitHub and Google Cloud console. Additionally, GitHub triggers support all the features supported by the existing GitHub triggers and use the Cloud Build GitHub app to configure and authenticate to GitHub.
+ 
+## Bibliography
 * [Desing Thinking](https://readings.design/PDF/Tim%20Brown,%20Design%20Thinking.pdf)
