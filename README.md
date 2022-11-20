@@ -44,7 +44,17 @@
   - [Create the environement ](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#creating-an-environment-from-an-environment-yml-file)with scripts/environment.yml
   - Activate the environment: conda activate stock
   - Run the app: python app.py
-  - Test the endpoint with a separate shell: http://localhost:8080/
+  - Test the endpoint with a separate shell: http://localhost:8081/
+
+## Code
+  - `application.conf:` Contains the parametrisation of the app. Used in the code to load constant like the version number of the app.
+  - `Dockerfile:` Contains the definition of the steps to create the docker image. The image will be created by google build (CI/CD) and saved into the google storage. Use this file to test the docker image on your local machine. See the section "Build and test the docker image".
+  - `get_data.py:` Use this script to download the stock history for S&P500
+  - `app.py:` Contains the main for the Flask server. It is also the entrypoint of the app. 
+  - `build_and_deploy_docker_image.sh:` Contains some basic instruction on how to build a docker image and running it.
+  - `src/algo:` This directory contains the code to fit and predict stock with a model.
+  - `src/business_logic:` This code contains the logic to process the query, deal with model storage etc...
+  - `src/IO:` This code deal with fetching the data, accessing the google storage etc...
 
 ## Bibliography
 * [Desing Thinking](https://readings.design/PDF/Tim%20Brown,%20Design%20Thinking.pdf)
