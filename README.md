@@ -30,6 +30,18 @@
 
 ## Docker
   - [Installation of docker: ](https://docs.docker.com/get-docker/)Docker is an open platform for developing, shipping, and running applications. Docker enables you to separate your applications from your infrastructure so you can deliver software quickly. With Docker, you can manage your infrastructure in the same ways you manage your applications. By taking advantage of Docker’s methodologies for shipping, testing, and deploying code quickly, you can significantly reduce the delay between writing code and running it in production.
+  - Build a docker image on local machine:
+```diff
+docker build . -f Dockerfile -t my_image_v2      
+```
+  - Run the docker image:
+```diff
+docker run -p 8081:8081 -v $GOOGLE_APPLICATION_CREDENTIALS:/creds.json -e GOOGLE_APPLICATION_CREDENTIALS=/creds.json my_image_v2     
+```
+  - (Optional) If for some reasons, you want to see what is going on inside the docker, you can start it in an interacting mode:
+```diff
+docker run -it -p 8081:8081 -v $GOOGLE_APPLICATION_CREDENTIALS:/creds.json -e GOOGLE_APPLICATION_CREDENTIALS=/creds.json my_image_v2 /bin/bash    
+```
 
 ## GitHub
   - [Create a repository: ](https://docs.github.com/en/get-started/quickstart/create-a-repo) You can store a variety of projects in GitHub repositories, including open source projects. With open source projects, you can share code to make better, more reliable software. You can use repositories to collaborate with others and track your work.
