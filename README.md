@@ -38,6 +38,10 @@ docker build . -f Dockerfile -t my_image_v2      
 ```diff
 docker run -p 8081:8081 -v $GOOGLE_APPLICATION_CREDENTIALS:/creds.json -e GOOGLE_APPLICATION_CREDENTIALS=/creds.json my_image_v2     
 ```
+  - Test if the app is working:
+```diff
+http://0.0.0.0/[name_of_your_end_point] 
+```
   - (Optional) If for some reasons, you want to see what is going on inside the docker, you can start it in an interacting mode:
 ```diff
 docker run -it -p 8081:8081 -v $GOOGLE_APPLICATION_CREDENTIALS:/creds.json -e GOOGLE_APPLICATION_CREDENTIALS=/creds.json my_image_v2 /bin/bash    
