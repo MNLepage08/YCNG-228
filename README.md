@@ -37,6 +37,9 @@
 ## Google Cloud Platform
   - [Create your project: ](https://cloud.google.com/resource-manager/docs/creating-managing-projects)Google Cloud projects form the basis for creating, enabling, and using all Google Cloud services including managing APIs, enabling billing, adding and removing collaborators, and managing permissions for Google Cloud resources.
   - [Get the credentials (json): ](https://cloud.google.com/docs/authentication/client-libraries)To use Application Default Credentials to authenticate your application, you must first set up Application Default Credentials for the environment where your application is running. When you use the client library to create a client, the client library automatically checks for and uses the credentials you have provided to ADC to authenticate to the APIs your code uses. Your application does not need to explicitly authenticate or manage tokens; these requirements are managed automatically by the authentication libraries.
+```diff
+export GOOGLE_APPLICATION_CREDENTIALS='/Users/marie-noellepage/Documents/Formation/McGill/ycng228-9c1bf1d7a47c.json'         
+```
   - [Set up CI/CD: ](https://cloud.google.com/build/docs/automating-builds/github/build-repos-from-github) GitHub triggers enable you to automatically build on Git pushes and pull requests and view your build results on GitHub and Google Cloud console. Additionally, GitHub triggers support all the features supported by the existing GitHub triggers and use the Cloud Build GitHub app to configure and authenticate to GitHub.
 
 ## On the machine
